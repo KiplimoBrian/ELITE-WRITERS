@@ -5,15 +5,6 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.5/firebas
 import { getStorage } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
 import { getAnalytics, isSupported } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBnLUtXtdGZAnlljfX3XDuwPTicAhy9gQY",
-  authDomain: "elite-writers.firebaseapp.com",
-  projectId: "elite-writers",
-  storageBucket: "elite-writers.firebasestorage.app",
-  messagingSenderId: "863732973548",
-  appId: "1:863732973548:web:0180a26983b92c16920ac9",
-  measurementId: "G-3F8E52YG9V"
-};
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
