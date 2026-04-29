@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - Elite Writers</title>
+  <meta name="description" content="Register on Elite Writers – Kenya's top freelance writing platform. Pay a one-time KSH 500 registration fee via Paybill and start earning." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Page-only polish (safe, doesn't affect other pages) -->
+  <style>
+    .register-wrap{
+  max-width: 720px;   /* was 980px */
+  margin: 60px auto 80px;
+  padding: 0 20px;
+}
+
+    .register-top{
+      text-align:center;
+      margin-bottom: 22px;
+    }
+
+    .register-top h1{
+  font-size: 2.6rem;   /* reduced from 3.0rem */
+  line-height: 1.15;
+  margin: 0 0 14px;
+  letter-spacing: -0.02em;
+}
+
+    .badge-fee{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.02);
+      border-radius: 999px;
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 14px;
+    }
+
+    body.dark .badge-fee{
+      background: rgba(255,255,255,0.06);
+    }
+
+       .register-card{
+  background: #fffaf2; /* creamy card */
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 26px;   /* reduced from 34px+ */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+
+    .register-card h2{
+      font-size: 2rem;
+      margin: 0 0 8px;
+      text-align:center;
+    }
+
+    .muted{
+      color: var(--gray);
+      text-align:center;
+      margin: 0 0 18px;
+      font-size: 1.05rem;
+    }
+
+    .auth-divider{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      margin: 18px 0 18px;
+      color: var(--gray);
+      font-size: 0.95rem;
+    }
+    .auth-divider::before,
+    .auth-divider::after{
+      content:"";
+      flex:1;
+      height:1px;
+      background: var(--border);
+    }
+
+    .btn-google{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: #111;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .06s ease, box-shadow .2s ease;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+    }
+    .btn-google:hover{ transform: translateY(-1px); }
+    .btn-google:active{ transform: translateY(0); }
+    body.dark .btn-google{
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+    }
+
+    .google-icon{
+      width: 18px;
+      height: 18px;
+      display:inline-block;
+    }
+
+    .form-row{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 560px){
+      .form-row{ grid-template-columns: 1fr; }
+    }
+
+    .input{
+  width: 100%;
+  padding: 12px 14px;  /* slightly reduced */
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  outline: none;
+  font-size: 0.95rem;
+}
+    body.dark .input{
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+    }
+
+    .input:focus{
+      border-color: rgba(47,108,255,0.55);
+      box-shadow: 0 0 0 4px rgba(47,108,255,0.12);
+    }
+
+    .label{
+      display:block;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .help{
+      margin-top: 8px;
+      color: var(--gray);
+      font-size: .9rem;
+    }
+
+    .pw-wrap{
+      position: relative;
+    }
+    .pw-toggle{
+      position:absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.02);
+      padding: 8px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--text);
+    }
+    body.dark .pw-toggle{
+      background: rgba(255,255,255,0.06);
+    }
+
+    .pw-meter{
+      display:flex;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .pw-bar{
+      flex: 1;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.08);
+      border: 1px solid var(--border);
+    }
+    body.dark .pw-bar{
+      background: rgba(255,255,255,0.08);
+    }
+    .pw-hint{
+      margin-top: 8px;
+      font-size: .9rem;
+      color: var(--gray);
+    }
+
+    .aside{
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+    }
+    .aside h3{
+      margin: 0 0 10px;
+      font-size: 1.25rem;
+    }
+    .aside ul{
+      margin: 0;
+      padding-left: 18px;
+      color: var(--text-light);
+      line-height: 1.7;
+    }
+
+    .cta{
+      margin-top: 18px;
+      text-align:center;
+    }
+
+    .tos{
+      font-size: 1rem;
+      margin: 14px 0 16px;
+      color: var(--text);
+    }
+    body{
+  background: #fdf6ec;  /* soft cream */
+}
+
+/* Keep dark mode unchanged */
+body.dark{
+  background: #0f172a;
+}
+
+    .loading{
+      opacity: .75;
+      pointer-events: none;
+    }
+    .spinner{
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 2px solid rgba(0,0,0,0.2);
+      border-top-color: rgba(0,0,0,0.65);
+      display:inline-block;
+      animation: spin .8s linear infinite;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+    body.dark .spinner{
+      border-color: rgba(255,255,255,0.25);
+      border-top-color: rgba(255,255,255,0.7);
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* status box */
+    #formStatus{
+      margin-top: 18px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.02);
+      display:none;
+      text-align:center;
+    }
+    body.dark #formStatus{ background: rgba(255,255,255,0.06); }
+  </style>
+</head>
+
+<body>
+  <!-- ✅ Navbar injected here -->
+  <div id="navbar"></div>
+
+  <script>
+    fetch("/navbar.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("navbar").innerHTML = html;
+
+        // Load auth toggle AFTER navbar exists
+        const s = document.createElement("script");
+        s.type = "module";
+        s.src = "/js/nav-auth-toggle.js?v=" + Date.now();
+        document.body.appendChild(s);
+
+        // Theme toggle hookup
+        const toggleBtn = document.getElementById("themeToggle");
+        const body = document.body;
+
+        if (toggleBtn) {
+          if (localStorage.getItem("theme") === "dark") {
+            body.classList.add("dark");
+            toggleBtn.textContent = "☀️";
+          } else {
+            toggleBtn.textContent = "🌙";
+          }
+
+          toggleBtn.addEventListener("click", () => {
+            body.classList.toggle("dark");
+            const isDark = body.classList.contains("dark");
+            toggleBtn.textContent = isDark ? "☀️" : "🌙";
+            localStorage.setItem("theme", isDark ? "dark" : "light");
+          });
+        }
+      });
+  </script>
+
+  <main class="register-wrap">
+    <div class="register-top" data-aos="fade-up">
+      <h1>
+        Register as an <span style="color: var(--primary);">Elite Writer</span>
+      </h1>
+      <p style="font-size: 1.2rem; color: var(--text-light); max-width: 760px; margin: 0 auto;">
+        Join Kenya’s most trusted freelance writing platform and unlock high-paying jobs.
+      </p>
+
+      <div class="badge-fee" aria-label="Registration fee">
+        ✅ One-time fee: <strong>KSH 500</strong> • Paid via M-Pesa
+      </div>
+
+      <p style="margin-top: 14px; color: var(--text-light); font-size: 1.05rem;">
+        Already registered?
+        <a href="login.html" style="color: var(--primary); font-weight: 700; text-decoration: underline;">
+          Log in →
+        </a>
+      </p>
+    </div>
+
+    <section>
+      <!-- FORM CARD -->
+      <div class="register-card" data-aos="fade-up">
+        <h2>Create Your Account</h2>
+        <p class="muted">Register in seconds, then continue to payment.</p>
+
+        <!-- ✅ Google Sign up -->
+        <button type="button" id="googleRegisterBtn" class="btn-google">
+          <svg class="google-icon" viewBox="0 0 48 48" aria-hidden="true">
+            <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8.1 3.1l5.7-5.7C34.2 6.1 29.4 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.1-.1-2.3-.4-3.5z"/>
+            <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16 19 12 24 12c3.1 0 5.9 1.2 8.1 3.1l5.7-5.7C34.2 6.1 29.4 4 24 4 16.3 4 9.6 8.3 6.3 14.7z"/>
+            <path fill="#4CAF50" d="M24 44c5.2 0 10-2 13.6-5.2l-6.3-5.2C29.3 36 26.8 37 24 37c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.7 16.2 44 24 44z"/>
+            <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1.1 3-3.2 5.4-5.9 7l.1.1 6.3 5.2C39.9 36.6 44 30.9 44 24c0-1.1-.1-2.3-.4-3.5z"/>
+          </svg>
+          Continue with Google
+        </button>
+
+        <div class="auth-divider">or sign up with email</div>
+
+        <!-- Registration Form -->
+        <form id="registerForm">
+          <div class="form-group" style="margin-bottom: 16px;">
+            <label class="label" for="fullName">Full Name *</label>
+            <input class="input" type="text" id="fullName" name="fullName" placeholder="e.g. Sarah Wanjiku" required />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 16px;">
+            <label class="label" for="email">Email Address *</label>
+            <input class="input" type="email" id="email" name="email" placeholder="your.email@example.com" required />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 16px;">
+            <label class="label" for="phone">Phone Number *</label>
+            <input class="input" type="tel" id="phone" name="phone" placeholder="07XXXXXXXX or 01XXXXXXXX" pattern="^0[71][0-9]{8}$" required />
+            <div class="help">Used for notifications and payment.</div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label class="label" for="password">Password *</label>
+            <div class="pw-wrap">
+              <input class="input" type="password" id="password" name="password" placeholder="Create a strong password (min. 8 characters)" required minlength="8" />
+              <button type="button" class="pw-toggle" id="pwToggle" aria-label="Show password">Show</button>
+            </div>
+
+            <!-- lightweight strength meter (no backend impact) -->
+            <div class="pw-meter" aria-hidden="true">
+              <div class="pw-bar" id="pwBar1"></div>
+              <div class="pw-bar" id="pwBar2"></div>
+              <div class="pw-bar" id="pwBar3"></div>
+              <div class="pw-bar" id="pwBar4"></div>
+            </div>
+            <div class="pw-hint" id="pwHint">Use 8+ chars with letters & numbers.</div>
+          </div>
+
+          <div class="cta">
+            <p class="tos">
+              By registering, you agree to our
+              <a href="terms.html" target="_blank" rel="noopener" style="color: var(--primary); font-weight: 700; text-decoration: underline;">Terms of Service</a>
+              and
+              <a href="privacy-policy.html" target="_blank" rel="noopener" style="color: var(--primary); font-weight: 700; text-decoration: underline;">Privacy Policy</a>.
+            </p>
+
+            <button type="submit" id="submitBtn" class="btn btn-primary" style="padding: 16px 40px; font-size: 1.15rem; border-radius: 12px;">
+              Create Account
+            </button>
+
+            <div id="formStatus"></div>
+          </div>
+        </form>
+      </div>
+
+          </section>
+  </main>
+
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 40px 20px; color: var(--gray); border-top: 1px solid var(--border);">
+    <p>&copy; 2025 Elite Writers. All rights reserved. | Made with ❤️ in Kenya</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="scripts.js"></script>
+  <script>
+    AOS.init({ duration: 900, easing: "ease-in-out", once: true, offset: 80 });
+
+    // Password show/hide (frontend only)
+    const pw = document.getElementById("password");
+    const toggle = document.getElementById("pwToggle");
+    if (pw && toggle) {
+      toggle.addEventListener("click", () => {
+        const isPw = pw.type === "password";
+        pw.type = isPw ? "text" : "password";
+        toggle.textContent = isPw ? "Hide" : "Show";
+      });
+    }
+
+    // Lightweight strength indicator (frontend only, doesn’t block submit)
+    const bars = [
+      document.getElementById("pwBar1"),
+      document.getElementById("pwBar2"),
+      document.getElementById("pwBar3"),
+      document.getElementById("pwBar4")
+    ];
+    const hint = document.getElementById("pwHint");
+    function scorePassword(v){
+      let s = 0;
+      if (!v) return 0;
+      if (v.length >= 8) s++;
+      if (/[A-Z]/.test(v) || /[a-z]/.test(v)) s++;
+      if (/\d/.test(v)) s++;
+      if (/[^A-Za-z0-9]/.test(v)) s++;
+      return Math.min(4, s);
+    }
+    function paint(score){
+      // use inline styles but no custom colors — just opacity levels
+      bars.forEach((b, i) => {
+        if (!b) return;
+        b.style.opacity = (i < score) ? "1" : "0.35";
+      });
+      if (!hint) return;
+      if (score <= 1) hint.textContent = "Weak: use 8+ characters.";
+      else if (score === 2) hint.textContent = "Okay: add numbers for strength.";
+      else if (score === 3) hint.textContent = "Good: add a symbol to make it stronger.";
+      else hint.textContent = "Strong password ✅";
+    }
+    if (pw) {
+      pw.addEventListener("input", () => paint(scorePassword(pw.value)));
+      paint(0);
+    }
+
+    </script>
+
+  <!-- ✅ Keep your existing backend logic (do NOT change) -->
+  <script type="module" src="/js/register.js?v=3000"></script>
+  <script type="module" src="js/paid-guard.js"></script>
+</body>
+</html>

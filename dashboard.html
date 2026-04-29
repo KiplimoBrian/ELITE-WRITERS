@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - Elite Writers</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- Navbar injected here -->
+  <div id="navbar"></div>
+
+  <script>
+    fetch("/navbar.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("navbar").innerHTML = html;
+
+        // Load navbar auth toggle after navbar exists
+        const s = document.createElement("script");
+        s.type = "module";
+        s.src = "/js/nav-auth-toggle.js?v=" + Date.now();
+        document.body.appendChild(s);
+      });
+  </script>
+
+  <main class="dashboard-container">
+    <h1>Writer Dashboard</h1>
+    <p class="subtitle">Track your tasks, deadlines, completed jobs, and earnings status.</p>
+
+    <div class="summary-cards">
+      <div class="card green-bg summary-card" data-tab="current">
+        <h3>Active Tasks</h3>
+        <p id="activeCount">1</p>
+      </div>
+
+      <div class="card green-bg summary-card" data-tab="completed">
+        <h3>Completed Jobs</h3>
+        <p>0</p>
+      </div>
+
+      <div class="card green-bg summary-card" data-tab="available">
+        <h3>Pending Reviews</h3>
+        <p>0</p>
+      </div>
+
+      <div class="card green-bg summary-card" data-tab="available">
+        <h3>Earnings This Month</h3>
+        <p>KES 0</p>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="available">Available Jobs</div>
+      <div class="tab" data-tab="current">Current Task</div>
+      <div class="tab" data-tab="submit">Submit Work</div>
+    </div>
+
+    <div id="available" class="tab-content active">
+      <div class="filters">
+        <div class="filters-grid">
+          <div class="filter-group">
+            <label for="searchInput">Search Title</label>
+            <input type="text" id="searchInput" placeholder="e.g. SEO, Blog..." />
+          </div>
+
+          <div class="filter-group">
+            <label>Min Words</label>
+            <div class="range-wrapper">
+              <span class="range-label">0</span>
+              <input type="range" id="wordsMin" min="0" max="3000" value="0" step="100">
+              <span id="wordsValue" class="range-label">3000+</span>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label>Min Pay (KES)</label>
+            <div class="range-wrapper">
+              <span class="range-label">0</span>
+              <input type="range" id="payMin" min="0" max="10000" value="0" step="500">
+              <span id="payValue" class="range-label">10,000+</span>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label for="deadlineSort">Deadline</label>
+            <select id="deadlineSort">
+              <option value="soon">Soonest First</option>
+              <option value="later">Latest First</option>
+            </select>
+          </div>
+
+          <button class="reset-btn" id="resetFilters">Reset Filters</button>
+        </div>
+      </div>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Job Title</th>
+            <th>Words</th>
+            <th>Pay (KES)</th>
+            <th>Deadline</th>
+            <th>Files</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="jobsBody"></tbody>
+      </table>
+
+      <p id="limitNotice" style="display:none; color:var(--primary); font-weight:600; margin-top:16px;">
+        You can only claim one task at a time.
+      </p>
+    </div>
+
+    <div id="current" class="tab-content">
+      <div id="taskStatus" class="task-status" style="display:none;"></div>
+      <div id="noTask" class="no-task">
+        <p>No active task. Go to <a href="#" class="tab-link" data-tab="available">Available Jobs</a> to claim one.</p>
+      </div>
+    </div>
+
+    <div id="submit" class="tab-content">
+      <div id="submitStatus" style="display:none;" class="task-status claimed">
+        <span class="status-badge">Ready to Submit</span>
+        <h3 id="submitTaskTitle"></h3>
+        <p id="taskDetails"></p>
+      </div>
+
+      <div id="submitForm" style="display:none;">
+        <div class="upload-area" id="uploadArea">
+          <p>Drag & drop files here or click to upload</p>
+          <p>Supported: PDF, DOCX, TXT (max 10MB each)</p>
+          <input type="file" id="fileInput" multiple accept=".pdf,.doc,.docx,.txt" style="display:none;">
+        </div>
+        <div class="file-list" id="fileList"></div>
+        <button id="submitBtn" class="btn-primary" style="display:none; margin-top:20px;">Submit Work</button>
+      </div>
+
+      <div id="noSubmitTask" class="no-task">
+        <p>You need an active task to submit work.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- My Profile Modal -->
+  <div id="profileModal" class="profile-modal hidden" aria-hidden="true">
+    <div class="profile-modal-backdrop" id="profileModalBackdrop"></div>
+
+    <div class="profile-card" role="dialog" aria-modal="true" aria-labelledby="profileTitle">
+      <div class="profile-header">
+        <h2 id="profileTitle">My Profile</h2>
+        <button type="button" id="closeProfileBtn" class="close-profile-btn" aria-label="Close profile modal">
+          &times;
+        </button>
+      </div>
+
+      <div class="profile-body">
+        <div class="profile-row">
+          <span class="profile-label">Full Name</span>
+          <span id="profileFullName" class="profile-value">Loading...</span>
+        </div>
+
+        <div class="profile-row">
+          <span class="profile-label">Email Address</span>
+          <span id="profileEmail" class="profile-value">Loading...</span>
+        </div>
+
+        <div class="profile-row">
+          <span class="profile-label">Email Verification</span>
+          <span id="profileEmailVerified" class="profile-value profile-status">Checking...</span>
+        </div>
+
+        <div class="profile-row">
+          <span class="profile-label">Phone Number</span>
+          <span id="profilePhone" class="profile-value">Loading...</span>
+        </div>
+
+        <div class="profile-row">
+          <span class="profile-label">Phone Verification</span>
+          <span id="profilePhoneVerified" class="profile-value profile-status">Checking...</span>
+        </div>
+
+        <div class="profile-row">
+          <span class="profile-label">Account Status</span>
+          <span id="profileAccountStatus" class="profile-value profile-status">Checking...</span>
+        </div>
+
+        <div class="profile-row">
+          <span class="profile-label">Payment Status</span>
+          <span id="profilePaymentStatus" class="profile-value profile-status">Checking...</span>
+        </div>
+      </div>
+
+      <div class="profile-footer">
+        <button type="button" id="logoutBtnBottom" class="btn-primary profile-logout-btn">
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Elite Writers. All rights reserved.</p>
+  </footer>
+
+  <script type="module" src="js/dashboard.js"></script>
+  <script type="module" src="js/paid-guard.js"></script>
+</body>
+</html>

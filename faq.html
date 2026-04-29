@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FAQ - Elite Writers</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Link to external CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">Elite Writers</a>
+      <div class="nav-links desktop-nav">
+        <a href="home.html">Home</a>
+        <a href="workflow.html">How It Works</a>
+        <a href="dashboard.html">Jobs</a>
+        <a href="payment.html">Payments</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="about.html">About Us</a>
+      </div>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-buttons">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="register.html" class="btn btn-primary">Register</a>
+      </div>
+    </nav>
+    
+  </header>
+
+  <section style="max-width: 900px; margin: 60px auto; padding: 0 20px;">
+    <h1 style="font-size: 2.8rem; text-align: center; margin-bottom: 16px;">Frequently Asked Questions</h1>
+    <p style="text-align: center; color: var(--gray); margin-bottom: 48px; font-size: 1.2rem;">
+      Everything you need to know about writing with Elite Writers
+    </p>
+
+    <div class="faq-list">
+      <details class="faq-item" open>
+        <summary class="faq-question">How do I apply to become a writer?</summary>
+        <div class="faq-answer">
+          <p>Click the "Apply Now" button on any page, fill out the application form with your details, expertise, and a link to your writing samples. Our team reviews applications within 48 hours and will notify you via email.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">What types of writing jobs are available?</summary>
+        <div class="faq-answer">
+          <p>We offer a wide range including academic essays, research papers, business proposals, blog posts, SEO content, technical writing, and editing/proofreading tasks.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">How and when do I get paid?</summary>
+        <div class="faq-answer">
+          <p>Payments are made directly to your M-Pesa account. You can request a withdrawal anytime once your available balance reaches KES 500. Withdrawals are processed within 24 hours.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">What are the payment rates?</summary>
+        <div class="faq-answer">
+          <p>Rates vary by task complexity, deadline, and word count — typically ranging from KES 300 to KES 800 per page. Higher rates are available for specialized or urgent work.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">Do I need specific qualifications?</summary>
+        <div class="faq-answer">
+          <p>While a degree is preferred, we prioritize strong writing skills. All applicants must pass a grammar test and submit quality writing samples during onboarding.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">Can I choose my own assignments?</summary>
+        <div class="faq-answer">
+          <p>Yes! Available jobs are posted in your dashboard. You can browse and claim tasks that match your expertise and schedule.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">Is there a minimum number of tasks I must complete?</summary>
+        <div class="faq-answer">
+          <p>No minimum requirement. You work at your own pace and choose how many assignments to take based on your availability.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">How do revisions and quality control work?</summary>
+        <div class="faq-answer">
+          <p>Clients may request revisions. We encourage clear communication to ensure satisfaction. Repeated quality issues may affect your account standing.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">Is Elite Writers available outside Kenya?</summary>
+        <div class="faq-answer">
+          <p>Yes! We welcome writers from anywhere, but payments are currently processed via M-Pesa (Kenya only). We are working on adding more international payment options soon.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">Who can I contact for support?</summary>
+        <div class="faq-answer">
+          <p>Email us at support@elitewriters.co.ke or use the contact form on the site. We typically respond within 12 hours.</p>
+        </div>
+      </details>
+    </div>
+
+    <div style="text-align: center; margin-top: 60px;">
+      <p style="color: var(--gray); margin-bottom: 20px;">Still have questions?</p>
+      <a href="mailto:support@elitewriters.co.ke" class="btn btn-primary">Contact Support</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Elite Writers. All rights reserved.</p>
+  </footer>
+
+  <!-- Link to external JavaScript -->
+  <script src="scripts.js"></script>
+  <script type="module" src="js/paid-guard.js"></script>
+
+  <!-- Additional FAQ-specific styles (will be moved to style.css if needed) -->
+   
+  </body>
+</html>

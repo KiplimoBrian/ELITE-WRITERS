@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Writer Portal - Elite Writers</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --text: #0f172a;
+      --text-light: #334155;
+      --bg: #ffffff;
+      --light-gray: #f8fafc;
+      --gray: #64748b;
+      --border: #e2e8f0;
+    }
+    .dark {
+      --bg: #0f172a;
+      --text: #f8fafc;
+      --text-light: #cbd5e1;
+      --light-gray: #1e293b;
+      --gray: #94a3b8;
+      --border: #334155;
+    }
+
+    html { scroll-behavior: smooth; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.3s, color 0.3s;
+      opacity: 0;
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .portal-container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .portal-container h1 { font-size: 2.5rem; margin-bottom: 12px; }
+    .subtitle { color: var(--gray); margin-bottom: 32px; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+    }
+    .card {
+      background: var(--light-gray);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.5s ease-out forwards;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 26px rgba(0,0,0,0.08);
+    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .card:nth-child(1) { animation-delay: 0.05s; }
+    .card:nth-child(2) { animation-delay: 0.10s; }
+    .card:nth-child(3) { animation-delay: 0.15s; }
+    .card:nth-child(4) { animation-delay: 0.20s; }
+    .card h3 { font-size: 1.3rem; margin-bottom: 8px; }
+    .card p { color: var(--text-light); }
+
+    footer {
+      text-align: center;
+      padding: 32px 20px;
+      color: var(--gray);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border);
+      margin-top: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar injected here -->
+  <div id="navbar"></div>
+
+  <!-- Inject navbar + load nav-auth-toggle -->
+  <script>
+    fetch("/navbar.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("navbar").innerHTML = html;
+
+        const s = document.createElement("script");
+        s.type = "module";
+        s.src = "/js/nav-auth-toggle.js"; // ✅ NO cache busting
+        document.body.appendChild(s);
+      })
+      .catch(err => console.error("Navbar load failed:", err));
+  </script>
+
+  <section class="portal-container">
+    <h1>Writer Portal</h1>
+    <p class="subtitle">Manage your writer profile, qualifications, and areas of expertise.</p>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Profile Information</h3>
+        <p>Update your bio, education, and writing experience.</p>
+      </div>
+      <div class="card">
+        <h3>Skills & Niches</h3>
+        <p>Select your writing categories and preferred subjects.</p>
+      </div>
+      <div class="card">
+        <h3>Documents</h3>
+        <p>Upload certificates, ID, and writing samples.</p>
+      </div>
+      <div class="card">
+        <h3>Availability</h3>
+        <p>Set your workload capacity and working hours.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Elite Writers. All rights reserved.</p>
+  </footer>
+
+  <!-- ✅ ONLY require login (no role/status/userDoc checks) -->
+  <script type="module">
+    import { auth } from "/js/firebase-init.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "/login.html";
+        return;
+      }
+      console.log("Writer portal allowed:", user.uid);
+    });
+  </script>
+  <script type="module" src="js/paid-guard.js"></script>
+</body>
+</html>

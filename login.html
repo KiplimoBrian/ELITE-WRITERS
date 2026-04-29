@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Elite Writers</title>
+  <meta name="description" content="Log in to your Elite Writers account. Access your dashboard, jobs, payments, and more." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- ✅ Navbar injected ONCE -->
+  <div id="navbar"></div>
+
+  <script>
+    fetch("/navbar.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("navbar").innerHTML = html;
+
+        // ✅ Load AFTER navbar is present
+        const s = document.createElement("script");
+        s.type = "module";
+        s.src = "/js/nav-auth-toggle.js?v=" + Date.now(); // cache-bust
+        document.body.appendChild(s);
+      });
+  </script>
+
+  <!-- ✅ REMOVE the hardcoded <header> navbar (it caused the duplicate nav) -->
+
+  <!-- Login Section -->
+  <section class="login-container" style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 60px 20px;">
+    <div class="login-card" style="background: var(--light-gray); border: 1px solid var(--border); border-radius: 16px; padding: 48px 40px; width: 100%; max-width: 480px; box-shadow: 0 15px 40px rgba(0,0,0,0.08);" data-aos="fade-up">
+      <h1 style="font-size: 2.8rem; text-align: center; margin-bottom: 16px;">Welcome Back</h1>
+      <p style="text-align: center; color: var(--gray); margin-bottom: 40px; font-size: 1.2rem;">
+        Log in to access your dashboard, jobs, and earnings.
+      </p>
+
+      <form id="loginForm">
+        <div class="form-group" style="margin-bottom: 28px;" data-aos="fade-up" data-aos-delay="100">
+          <label for="email" style="display: block; margin-bottom: 8px; font-weight: 600;">Email Address</label>
+          <input type="email" id="email" placeholder="your.email@example.com" required
+                 style="width: 100%; padding: 16px; border: 1px solid var(--border); border-radius: 10px; font-size: 1rem; background: var(--bg); color: var(--text);" />
+        </div>
+
+        <div class="form-group" style="margin-bottom: 28px;" data-aos="fade-up" data-aos-delay="200">
+          <label for="password" style="display: block; margin-bottom: 8px; font-weight: 600;">Password</label>
+          <input type="password" id="password" placeholder="••••••••" required
+                 style="width: 100%; padding: 16px; border: 1px solid var(--border); border-radius: 10px; font-size: 1rem; background: var(--bg); color: var(--text);" />
+        </div>
+
+        <div class="forgot-password" style="text-align: right; margin-bottom: 32px;" data-aos="fade-up" data-aos-delay="300">
+          <a href="#" style="color: var(--primary); font-size: 1rem; text-decoration: none;">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 18px; font-size: 1.3rem;" data-aos="fade-up" data-aos-delay="400">
+          Log In
+        </button>
+      </form>
+
+      <div class="signup-link" style="text-align: center; margin-top: 40px; color: var(--text-light); font-size: 1.1rem;" data-aos="fade-up" data-aos-delay="500">
+        New to Elite Writers?
+        <a href="register.html" style="color: var(--primary); font-weight: 600; text-decoration: underline;">Register here →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 40px 20px; color: var(--gray); border-top: 1px solid var(--border);">
+    <p>&copy; 2025 Elite Writers. All rights reserved. | Made with ❤️ in Kenya</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="scripts.js"></script>
+  <script>
+    AOS.init({
+      duration: 900,
+      easing: 'ease-in-out',
+      once: true,
+      offset: 100
+    });
+  </script>
+
+  <!-- ✅ Keep your existing login backend logic -->
+  <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/paid-guard.js"></script>
+</body>
+</html>

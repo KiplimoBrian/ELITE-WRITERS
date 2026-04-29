@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Privacy Policy - Elite Writers</title>
+  <meta name="description" content="Privacy Policy for Elite Writers – How we collect, use, and protect your personal data in compliance with Kenyan law." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- ✅ Navbar injected here -->
+  <div id="navbar"></div>
+
+  <!-- ✅ Inject navbar.html then load nav-auth-toggle AFTER it exists.
+      ALSO: themeToggle is inside navbar.html, so wire it AFTER injection. -->
+  <script>
+    fetch("/navbar.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("navbar").innerHTML = html;
+
+        // Load auth toggle AFTER navbar exists
+        const s = document.createElement("script");
+        s.type = "module";
+        s.src = "/js/nav-auth-toggle.js?v=" + Date.now(); // cache-bust
+        document.body.appendChild(s);
+
+        // Theme toggle hookup (safe even if button not present)
+        const toggleBtn = document.getElementById("themeToggle");
+        const body = document.body;
+
+        if (toggleBtn) {
+          if (localStorage.getItem("theme") === "dark") {
+            body.classList.add("dark");
+            toggleBtn.textContent = "☀️";
+          } else {
+            toggleBtn.textContent = "🌙";
+          }
+
+          toggleBtn.addEventListener("click", () => {
+            body.classList.toggle("dark");
+            const isDark = body.classList.contains("dark");
+            toggleBtn.textContent = isDark ? "☀️" : "🌙";
+            localStorage.setItem("theme", isDark ? "dark" : "light");
+          });
+        }
+      });
+  </script>
+
+  <!-- ✅ Main Content (removed duplicate hard-coded header/navbar) -->
+  <main style="max-width: 900px; margin: 80px auto; padding: 0 20px; line-height: 1.8;" data-aos="fade-up">
+    <h1 style="font-size: 3rem; text-align: center; margin-bottom: 16px;">Privacy Policy</h1>
+    <p style="text-align: center; color: var(--gray); margin-bottom: 60px;">Last Updated: December 26, 2025</p>
+
+    <section style="margin-bottom: 48px;">
+      <p>
+        Elite Writers ("we," "us," or "our") is committed to protecting your privacy and handling your personal data responsibly. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform at <strong>elitewriters.co.ke</strong> (the "Platform").
+      </p>
+      <p>
+        We comply with the <strong>Kenya Data Protection Act, 2019</strong> and related regulations.
+      </p>
+      <p>
+        By using the Platform, you consent to the practices described in this policy.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 48px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">1. Information We Collect</h2>
+      <p>We collect the following types of information:</p>
+      <ul style="padding-left: 24px; margin-bottom: 16px;">
+        <li><strong>Personal Information You Provide:</strong> Full name, email address, phone number (M-Pesa registered), password, primary expertise, and optional writing samples/portfolio links during registration and profile setup.</li>
+        <li><strong>Payment Information:</strong> M-Pesa phone number used for the registration fee (KSH 500) and subsequent withdrawals. We do not store full transaction details—payments are processed securely via Safaricom's Daraja API.</li>
+        <li><strong>Usage Data:</strong> IP address, browser type, device information, pages visited, time spent on pages, and interaction with jobs/dashboard.</li>
+        <li><strong>Communications:</strong> Emails, support messages, or feedback you send us.</li>
+      </ul>
+    </section>
+
+    <section style="margin-bottom: 48px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">2. How We Use Your Information</h2>
+      <p>We use your information to:</p>
+      <ul style="padding-left: 24px; margin-bottom: 16px;">
+        <li>Create and manage your account.</li>
+        <li>Process the one-time registration fee and future withdrawals via M-Pesa.</li>
+        <li>Match you with suitable writing jobs and notify you of opportunities.</li>
+        <li>Communicate important updates, job assignments, deadlines, and support responses.</li>
+        <li>Improve the Platform, prevent fraud, and ensure security.</li>
+        <li>Comply with legal obligations.</li>
+      </ul>
+    </section>
+
+    <section style="margin-bottom: 48px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">3. Sharing Your Information</h2>
+      <p>We share your data only when necessary:</p>
+      <ul style="padding-left: 24px; margin-bottom: 16px;">
+        <li>With <strong>Safaricom</strong> to process M-Pesa STK Push for registration and withdrawals.</li>
+        <li>With service providers (e.g., hosting, analytics) who are contractually bound to protect your data.</li>
+        <li>When required by law, court order, or government authority.</li>
+        <li>In the event of a merger, acquisition, or sale of assets (your data may be transferred).</li>
+      </ul>
+      <p>We do <strong>not sell</strong> your personal information to third parties.</p>
+    </section>
+
+    <section style="margin-bottom: 48px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">4. Data Security</h2>
+      <p>
+        We implement reasonable technical and organizational measures (encryption, secure servers, access controls) to protect your data. However, no online transmission or storage is 100% secure. We cannot guarantee absolute security.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 48px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">5. Data Retention</h2>
+      <p>
+        We retain your personal data only as long as necessary for the purposes outlined above or as required by law. Inactive accounts may have data deleted after 24 months.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 48px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">6. Your Rights Under Kenyan Law</h2>
+      <p>You have the right to:</p>
+      <ul style="padding-left: 24px; margin-bottom: 16px;">
+        <li>Access your personal data.</li>
+        <li>Correct inaccurate data.</li>
+        <li>Request deletion of your data (subject to legal obligations).</li>
+        <li>Object to or restrict processing.</li>
+        <li>Withdraw consent (where applicable).</li>
+        <li>Lodge a complaint with the Office of the Data Protection Commissioner (ODPC) in Kenya.</li>
+      </ul>
+      <p>To exercise these rights, contact us at <a href="mailto:support@elitewriters.co.ke">support@elitewriters.co.ke</a>.</p>
+    </section>
+
+    <section style="margin-bottom: 48px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">7. Cookies and Tracking</h2>
+      <p>
+        We use essential cookies and local storage for functionality (e.g., login sessions, theme preferences). We do not use advertising or third-party tracking cookies.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 48px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">8. Children's Privacy</h2>
+      <p>
+        The Platform is not intended for individuals under 18 years old. We do not knowingly collect data from children.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 48px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">9. Changes to This Policy</h2>
+      <p>
+        We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated "Last Updated" date. Significant changes will be notified via email or Platform announcement.
+      </p>
+    </section>
+
+    <section style="text-align: center; padding: 40px 20px; background: var(--light-gray); border-radius: 12px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">Contact Us</h2>
+      <p>If you have questions about this Privacy Policy or your data, please contact:</p>
+      <p><strong>Email:</strong> <a href="mailto:support@elitewriters.co.ke" style="color: var(--primary); font-weight: 600;">support@elitewriters.co.ke</a></p>
+      <p style="margin-top: 32px;">Thank you for trusting Elite Writers with your personal information.</p>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 40px 20px; color: var(--gray); border-top: 1px solid var(--border);">
+    <p>&copy; 2025 Elite Writers. All rights reserved. | Made with ❤️ in Kenya</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="scripts.js"></script>
+  <script>
+    AOS.init({
+      duration: 900,
+      easing: 'ease-in-out',
+      once: true,
+      offset: 100
+    });
+  </script>
+  <script type="module" src="js/paid-guard.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login - Elite Writers</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <main class="dashboard-container" style="max-width: 520px; margin: 60px auto;">
+    <h1>Admin Login</h1>
+    <p class="subtitle">Login using Firebase Email/Password.</p>
+
+    <div class="card" style="padding: 24px;">
+      <form id="adminLoginForm">
+        <div class="form-group">
+          <label for="email">Admin Email</label>
+          <input id="email" type="email" placeholder="admin@example.com" required />
+        </div>
+
+        <div class="form-group" style="margin-top: 14px;">
+          <label for="password">Password</label>
+          <input id="password" type="password" placeholder="Your password" required />
+        </div>
+
+        <button class="btn-primary" type="submit" style="margin-top: 18px; width: 100%;">
+          Login
+        </button>
+
+        <p id="status" style="margin-top: 14px; color: var(--gray);"></p>
+      </form>
+    </div>
+  </main>
+
+  <script type="module" src="js/admin-login.js"></script>
+</body>
+</html>

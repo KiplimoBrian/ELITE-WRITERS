@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - Elite Writers</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ✅ Navbar injected here -->
+  <div id="navbar"></div>
+
+  <script>
+    fetch("/navbar.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("navbar").innerHTML = html;
+
+        // Load AFTER navbar exists
+        const s = document.createElement("script");
+        s.type = "module";
+        s.src = "/js/nav-auth-toggle.js?v=" + Date.now(); // cache-bust
+        document.body.appendChild(s);
+      });
+  </script>
+
+  <!-- ✅ PAGE CONTENT (no second navbar) -->
+  <section class="about-hero" style="max-width: 1200px; margin: 60px auto 80px; padding: 0 20px; text-align: center;">
+    <h1 style="font-size: 3.2rem; margin-bottom: 16px;">About Elite Writers</h1>
+    <p style="font-size: 1.3rem; color: var(--text-light); max-width: 800px; margin: 0 auto 32px;">
+      Empowering skilled writers to thrive while delivering exceptional content to clients across Kenya and beyond.
+    </p>
+  </section>
+
+  <section style="max-width: 1200px; margin: 0 auto 80px; padding: 0 20px;">
+    <div class="about-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+      <div>
+        <h2 style="font-size: 2.2rem; margin-bottom: 24px;">Our Mission</h2>
+        <p style="color: var(--text-light); line-height: 1.8; margin-bottom: 24px;">
+          At Elite Writers, we believe great writing changes lives. Our mission is to create a fair, transparent, and rewarding platform where talented writers can earn a sustainable income while helping students, businesses, and individuals succeed through high-quality content.
+        </p>
+        <p style="color: var(--text-light); line-height: 1.8;">
+          We’re committed to building a community of professional writers and clients who value integrity, excellence, and mutual respect.
+        </p>
+      </div>
+
+      <div>
+        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+             alt="Team working together" 
+             style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; height: auto; object-fit: cover;">
+      </div>
+    </div>
+  </section>
+
+  <section style="background: var(--light-gray); padding: 80px 20px;">
+    <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+      <h2 style="font-size: 2.2rem; margin-bottom: 48px;">Our Values</h2>
+
+      <div class="values-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px;">
+        <div class="value-card" style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 32px; transition: all 0.3s ease;">
+          <div style="font-size: 3rem; color: var(--primary); margin-bottom: 16px;">📝</div>
+          <h3 style="font-size: 1.4rem; margin-bottom: 12px;">Quality First</h3>
+          <p style="color: var(--text-light);">We prioritize original, well-researched, and polished work that meets the highest standards.</p>
+        </div>
+
+        <div class="value-card" style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 32px; transition: all 0.3s ease;">
+          <div style="font-size: 3rem; color: var(--primary); margin-bottom: 16px;">🤝</div>
+          <h3 style="font-size: 1.4rem; margin-bottom: 12px;">Transparency</h3>
+          <p style="color: var(--text-light);">Clear communication, fair pricing, and timely payments are at the heart of everything we do.</p>
+        </div>
+
+        <div class="value-card" style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 32px; transition: all 0.3s ease;">
+          <div style="font-size: 3rem; color: var(--primary); margin-bottom: 16px;">🚀</div>
+          <h3 style="font-size: 1.4rem; margin-bottom: 12px;">Growth</h3>
+          <p style="color: var(--text-light);">We support our writers with training, feedback, and opportunities to grow their skills and income.</p>
+        </div>
+
+        <div class="value-card" style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 32px; transition: all 0.3s ease;">
+          <div style="font-size: 3rem; color: var(--primary); margin-bottom: 16px;">🌍</div>
+          <h3 style="font-size: 1.4rem; margin-bottom: 12px;">Community</h3>
+          <p style="color: var(--text-light);">We foster a supportive environment where writers and clients thrive together.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width: 1200px; margin: 80px auto; padding: 0 20px; text-align: center;">
+    <h2 style="font-size: 2.2rem; margin-bottom: 48px;">Our Impact</h2>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px;">
+      <div>
+        <p style="font-size: 3.5rem; font-weight: 700; color: var(--primary);">500+</p>
+        <p style="color: var(--gray);">Active Writers</p>
+      </div>
+      <div>
+        <p style="font-size: 3.5rem; font-weight: 700; color: var(--primary);">KES 50M+</p>
+        <p style="color: var(--gray);">Paid Out</p>
+      </div>
+      <div>
+        <p style="font-size: 3.5rem; font-weight: 700; color: var(--primary);">10,000+</p>
+        <p style="color: var(--gray);">Jobs Completed</p>
+      </div>
+      <div>
+        <p style="font-size: 3.5rem; font-weight: 700; color: var(--primary);">4.9/5</p>
+        <p style="color: var(--gray);">Client Satisfaction</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: var(--light-gray); padding: 80px 20px; text-align: center;">
+    <h2 style="font-size: 2.2rem; margin-bottom: 24px;">Join the Elite Writers Community</h2>
+    <p style="color: var(--text-light); margin-bottom: 32px; max-width: 700px; margin-left: auto; margin-right: auto;">
+      Whether you're a talented writer looking for consistent work or a client seeking top-quality content, we invite you to be part of our growing community.
+    </p>
+    <div style="display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;">
+      <a href="register.html" class="btn btn-primary" style="padding: 16px 32px; font-size: 1.2rem;">Register</a>
+      <a href="contact.html" class="btn btn-outline" style="padding: 16px 32px; font-size: 1.2rem;">Contact Us</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Elite Writers. All rights reserved.</p>
+  </footer>
+
+  <script src="scripts.js"></script>
+  <script type="module" src="js/paid-guard.js"></script>
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Elite Writers - Home</title>
+  <meta name="description" content="Elite Writers — Kenya's platform for professional freelance writers. Apply, get approved, work on real jobs, and withdraw earnings via M-Pesa." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0b1220;
+      --panel: #111a2b;
+      --text: #ffffff;
+      --muted: rgba(255,255,255,.78);
+      --border: rgba(255,255,255,.14);
+      --gold: #fbbf24;
+      --blue: #2563eb;
+      --card: #0f172a;
+    }
+
+    *{ box-sizing: border-box; }
+    html{ scroll-behavior: smooth; }
+    body{
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* Sticky top nav */
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,.08);
+    }
+
+    .navbar{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 1px;
+      text-decoration:none;
+      color:#0b1220;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+    .brand img{
+      height: 100px;
+      width: auto;
+      display:block;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap: 18px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .nav-links a{
+      color:#0b1220;
+      text-decoration:none;
+      font-weight: 600;
+      font-size: 0.98rem;
+      padding: 8px 10px;
+      border-radius: 10px;
+    }
+    .nav-links a:hover{
+      background: rgba(37,99,235,.08);
+    }
+
+    .nav-buttons{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      white-space: nowrap;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      text-decoration:none;
+      font-size: .95rem;
+      border: 1px solid rgba(37,99,235,.28);
+    }
+    .btn-outline{
+      color: var(--blue);
+      background: transparent;
+    }
+    .btn-primary{
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+
+    /* HERO = full screen (no sandwich) */
+    .hero{
+      width: 100%;
+      min-height: calc(100vh - 70px); /* fill remaining screen under nav */
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--bg);
+    }
+
+    .hero-left{
+      padding: clamp(28px, 4vw, 64px);
+      display:flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+      background: linear-gradient(180deg, rgba(15,23,42,0.95), rgba(30,41,59,0.95));
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.22);
+      width: fit-content;
+      font-weight: 600;
+      color: rgba(255,255,255,.92);
+      font-size: .92rem;
+    }
+    .dot{
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      display:inline-block;
+    }
+
+    .hero h1{
+      margin: 0;
+      font-size: clamp(2.1rem, 4vw, 3.4rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+    .accent{ color: var(--gold); }
+
+    .hero p{
+      margin: 10px 0 0;
+      max-width: 60ch;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.6;
+    }
+
+    .cta{
+      margin-top: 16px;
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .cta a{
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 800;
+      text-decoration: none;
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      border: 1px solid rgba(255,255,255,.16);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .cta a:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 16px 30px rgba(0,0,0,.25);
+    }
+    .btn-gold{
+      background: var(--gold);
+      color: #0b1220;
+      border-color: rgba(0,0,0,.12);
+    }
+    .btn-ghost{
+      color: #fff;
+      background: rgba(255,255,255,.08);
+    }
+
+    .hero-right{
+      position: relative;
+      min-height: 420px;
+      background: #0b1220;
+    }
+    .hero-right img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display:block;
+    }
+    .hero-right::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(90deg, rgba(0,0,0,.35), rgba(0,0,0,.10));
+      pointer-events:none;
+    }
+
+    /* Sections */
+    section.block{
+      background: #f8fafc;
+      color: #0b1220;
+      padding: 70px 0;
+    }
+
+    .wrap{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 18px;
+    }
+
+    .section-title{
+      text-align:center;
+      margin: 0 0 12px;
+      font-size: clamp(1.6rem, 2.4vw, 2.3rem);
+      letter-spacing: -0.02em;
+    }
+    .section-lead{
+      text-align:center;
+      max-width: 860px;
+      margin: 0 auto 34px;
+      color: rgba(11,18,32,.72);
+      line-height: 1.7;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 16px;
+    }
+
+    .card{
+      background: #fff;
+      border: 1px solid rgba(11,18,32,.10);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.06);
+    }
+    .card h3{
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+    }
+    .card p{
+      margin: 0;
+      color: rgba(11,18,32,.72);
+      line-height: 1.6;
+    }
+
+    /* FAQ */
+    .faq{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    details{
+      background: #fff;
+      border: 1px solid rgba(11,18,32,.10);
+      border-radius: 16px;
+      padding: 14px 16px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.06);
+    }
+    summary{
+      cursor:pointer;
+      font-weight: 800;
+    }
+    details p{
+      margin: 10px 0 0;
+      color: rgba(11,18,32,.72);
+      line-height: 1.6;
+    }
+
+    /* Contact */
+    .contact-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .contact-card{
+      background:#fff;
+      border: 1px solid rgba(11,18,32,.10);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.06);
+    }
+    .contact-card a{
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    footer{
+      background: #0b1220;
+      color: rgba(255,255,255,.7);
+      text-align:center;
+      padding: 26px 18px;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .navbar{
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .nav-buttons{ width: 100%; justify-content: center; }
+      .hero{
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .hero-right{ min-height: 320px; }
+      .grid{ grid-template-columns: 1fr; }
+      .faq{ grid-template-columns: 1fr; }
+      .contact-grid{ grid-template-columns: 1fr; }
+    }
+
+    /* Anchor offset so sections don't hide under sticky header */
+    .anchor{
+      scroll-margin-top: 90px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav class="navbar">
+    <a href="#top" class="brand">
+      <img src="images/logo-gold-transparent.png" alt="Elite Writers Logo" />
+      <span>Elite Writers</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="#top">Home</a>
+      <a href="#how">How It Works</a>
+      <a href="dashboard.html" id="navJobsLink">Jobs</a>
+      <a href="payment.html" id="navPaymentsLink">Payments</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+      <a href="#about">About Us</a>
+    </div>
+
+    <div class="nav-buttons">
+      <a href="login.html" class="btn btn-outline" id="navLoginBtn">Login</a>
+      <a href="register.html" class="btn btn-primary" id="navRegisterBtn">Register</a>
+
+      <a href="dashboard.html" class="btn btn-outline" id="navDashboardBtn" style="display:none;">Dashboard</a>
+      <button class="btn btn-primary" id="navLogoutBtn" style="display:none;">Logout</button>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-left">
+      <div class="badge"><span class="dot"></span> Premium Writing Platform • Kenya</div>
+
+      <h1>Build your writing career with <span class="accent">Elite Writers</span></h1>
+
+      <p>
+        Apply, get approved, work on real jobs, track deadlines, and withdraw earnings via M-Pesa —
+        all in one secure platform.
+      </p>
+
+      <div class="cta">
+        <a class="btn-gold" href="register.html" id="heroGetStartedBtn">Get Started →</a>
+        <a class="btn-ghost" href="#how">How It Works</a>
+        <a class="btn-ghost" href="dashboard.html">Browse Jobs</a>
+      </div>
+    </div>
+
+    <div class="hero-right" aria-hidden="true">
+      <img src="images/backgroundimage.jpg" alt="Professional writer workspace">
+    </div>
+  </section>
+
+  <section id="how" class="block anchor">
+    <div class="wrap">
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-lead">
+        A simple and transparent process: apply once, get approved, access jobs, submit work, and withdraw your earnings.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>1) Register & Apply</h3>
+          <p>Create an account, complete your writer profile, and submit your application for review.</p>
+        </div>
+        <div class="card">
+          <h3>2) Get Approved</h3>
+          <p>We verify your details and skills. Once approved, you unlock access to available writing jobs.</p>
+        </div>
+        <div class="card">
+          <h3>3) Work & Get Paid</h3>
+          <p>Accept tasks, meet deadlines, submit quality work, and withdraw your earnings via M-Pesa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="block anchor">
+    <div class="wrap">
+      <h2 class="section-title">FAQ</h2>
+      <p class="section-lead">Quick answers to common questions about getting started, jobs, and payments.</p>
+
+      <div class="faq">
+        <details>
+          <summary>How do I get approved?</summary>
+          <p>Complete your profile and submit your application. We review your details and notify you once approved.</p>
+        </details>
+
+        <details>
+          <summary>How do payments work?</summary>
+          <p>You withdraw earnings through the Payments page. Withdrawals are sent to your M-Pesa number.</p>
+        </details>
+
+        <details>
+          <summary>Can I work anytime?</summary>
+          <p>Yes. You can accept jobs when available and work on your schedule as long as you meet deadlines.</p>
+        </details>
+
+        <details>
+          <summary>What happens if I miss a deadline?</summary>
+          <p>Repeated missed deadlines can affect your access to jobs. Always communicate early if you need help.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="block anchor">
+    <div class="wrap">
+      <h2 class="section-title">About Elite Writers</h2>
+      <p class="section-lead">
+        Elite Writers connects talented writers with real clients and provides a secure workflow for managing jobs, quality, and payouts.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Our Mission</h3>
+          <p>To help writers build sustainable careers by providing consistent work and fair, transparent payments.</p>
+        </div>
+        <div class="card">
+          <h3>Quality First</h3>
+          <p>We focus on high standards, clear guidelines, and reliable support for writers and clients.</p>
+        </div>
+        <div class="card">
+          <h3>Secure Platform</h3>
+          <p>Track tasks, submissions, and payments in one place—designed to be simple and trustworthy.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="block anchor">
+    <div class="wrap">
+      <h2 class="section-title">Contact Us</h2>
+      <p class="section-lead">Need help? Reach out and we’ll respond as soon as possible.</p>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h3>Email</h3>
+          <p>Send us a message anytime.</p>
+          <p><a href="mailto:support@elitewriters.com">support@elitewriters.com</a></p>
+        </div>
+
+        <div class="contact-card">
+          <h3>Phone / WhatsApp</h3>
+          <p>Chat with support.</p>
+          <p><a href="tel:+254700000000">+254 700 000 000</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © 2026 Elite Writers. All rights reserved.
+</footer>
+
+<script type="module" src="/js/nav-auth-toggle.js"></script>
+<!-- ✅ IMPORTANT: do NOT load paid-guard.js on the public home page (index.html) -->
+ <script type="module" src="/js/nav-paid-lock.js"></script>
+</body>
+</html>

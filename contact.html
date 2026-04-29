@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us - Elite Writers</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- ✅ Navbar injected here -->
+  <div id="navbar"></div>
+
+  <script>
+    fetch("/navbar.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("navbar").innerHTML = html;
+
+        // ✅ Auth toggle AFTER navbar exists
+        const s = document.createElement("script");
+        s.type = "module";
+        s.src = "/js/nav-auth-toggle.js?v=" + Date.now(); // cache-bust
+        document.body.appendChild(s);
+      });
+  </script>
+
+  <!-- ✅ Removed the hardcoded <header> navbar -->
+
+  <section class="contact-container" style="max-width: 1100px; margin: 60px auto; padding: 0 20px;">
+    <h1 style="font-size: 2.8rem; text-align: center; margin-bottom: 16px;">Get in Touch</h1>
+    <p style="text-align: center; color: var(--gray); margin-bottom: 48px; font-size: 1.2rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+      Have a question, need support, or want to partner with us? Send us a message and our admin team will get back to you within 12 hours.
+    </p>
+
+    <div class="contact-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;">
+      <!-- Contact Form (sends directly to admin) -->
+      <div class="contact-form-card" style="background: var(--light-gray); border: 1px solid var(--border); border-radius: 12px; padding: 40px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); transition: all 0.3s ease;">
+        <h2 style="font-size: 1.8rem; margin-bottom: 24px;">Send a Message to Admin</h2>
+        <p style="color: var(--text-light); margin-bottom: 32px;">Your message will be received directly by our admin team.</p>
+
+        <!-- Formspree form - replace YOUR_FORMSPREE_ID + your _next URL -->
+        <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+          <input type="hidden" name="_subject" value="New Message from Elite Writers Contact Form" />
+          <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html" />
+
+          <div class="form-group" style="margin-bottom: 24px;">
+            <label for="name" style="display: block; margin-bottom: 8px; font-weight: 500;">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required
+                   style="width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; background: var(--bg); color: var(--text);" />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 24px;">
+            <label for="email" style="display: block; margin-bottom: 8px; font-weight: 500;">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="your.email@example.com" required
+                   style="width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; background: var(--bg); color: var(--text);" />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 24px;">
+            <label for="subject" style="display: block; margin-bottom: 8px; font-weight: 500;">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="e.g. Payment Issue / Job Inquiry" required
+                   style="width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; background: var(--bg); color: var(--text);" />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 32px;">
+            <label for="message" style="display: block; margin-bottom: 8px; font-weight: 500;">Message</label>
+            <textarea id="message" name="message" rows="6" placeholder="How can we help you?" required
+                      style="width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; background: var(--bg); color: var(--text); resize: vertical;"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 1.1rem;">
+            Send Message to Admin
+          </button>
+        </form>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="contact-info" style="padding: 40px;">
+        <h2 style="font-size: 1.8rem; margin-bottom: 32px;">Contact Information</h2>
+
+        <div class="contact-item" style="margin-bottom: 32px; display: flex; align-items: flex-start; gap: 16px;">
+          <div style="font-size: 1.8rem; color: var(--primary);">✉️</div>
+          <div>
+            <h4 style="margin-bottom: 8px; font-size: 1.1rem;">Email</h4>
+            <p style="color: var(--text-light);">
+              <a href="mailto:support@elitewriters.co.ke" style="color: var(--primary); text-decoration: none;">support@elitewriters.co.ke</a><br>
+              <a href="mailto:admin@elitewriters.co.ke" style="color: var(--primary); text-decoration: none;">admin@elitewriters.co.ke</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-item" style="margin-bottom: 32px; display: flex; align-items: flex-start; gap: 16px;">
+          <div style="font-size: 1.8rem; color: var(--primary);">📞</div>
+          <div>
+            <h4 style="margin-bottom: 8px; font-size: 1.1rem;">Phone / WhatsApp</h4>
+            <p style="color: var(--text-light);">+254 712 345 678</p>
+            <p style="color: var(--text-light); margin-top: 8px;">
+              <a href="https://wa.me/254712345678" target="_blank" rel="noopener" style="color: var(--primary); text-decoration: none;">Chat on WhatsApp</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-item" style="margin-bottom: 32px; display: flex; align-items: flex-start; gap: 16px;">
+          <div style="font-size: 1.8rem; color: var(--primary);">🕒</div>
+          <div>
+            <h4 style="margin-bottom: 8px; font-size: 1.1rem;">Working Hours</h4>
+            <p style="color: var(--text-light);">Monday – Friday: 8:00 AM – 8:00 PM (EAT)<br>Weekends: 10:00 AM – 5:00 PM (EAT)</p>
+          </div>
+        </div>
+
+        <div style="margin-top: 40px;">
+          <h3 style="font-size: 1.3rem; margin-bottom: 16px;">Social Media</h3>
+          <div style="display: flex; gap: 16px;">
+            <a href="#" style="color: var(--primary); font-size: 1.8rem; text-decoration: none;">Twitter</a>
+            <a href="#" style="color: var(--primary); font-size: 1.8rem; text-decoration: none;">Facebook</a>
+            <a href="#" style="color: var(--primary); font-size: 1.8rem; text-decoration: none;">Instagram</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Elite Writers. All rights reserved.</p>
+  </footer>
+
+  <!-- External JavaScript -->
+  <script src="scripts.js"></script>
+  <script type="module" src="js/paid-guard.js"></script>
+</body>
+</html>

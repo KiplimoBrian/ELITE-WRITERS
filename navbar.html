@@ -1,0 +1,34 @@
+<header style="position: sticky; top: 0; z-index: 1000;">
+  <nav class="navbar">
+    <a href="index.html" class="logo" style="font-size: 22px; font-weight: 800; letter-spacing: 0.3px;">
+      Elite Writers
+    </a>
+
+    <div class="nav-links desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="workflow.html">How It Works</a>
+      <a href="dashboard.html">Jobs</a>
+      <a href="payment.html">Payments</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+      <a href="about.html">About Us</a>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+
+      <!-- Guest buttons -->
+      <a href="login.html" class="btn btn-outline" id="navLoginBtn">Login</a>
+      <a href="register.html" class="btn btn-primary" id="navRegisterBtn">Register</a>
+
+      <!-- Auth buttons -->
+      <a href="dashboard.html" class="btn btn-outline" id="navDashboardBtn" style="display:none;">Dashboard</a>
+
+      <!-- Shown for users who are logged in but NOT fully confirmed/paid -->
+      <button class="btn btn-primary" id="navLogoutBtn" style="display:none;">Logout</button>
+
+      <!-- Shown ONLY for users whose registration payment is confirmed -->
+      <button class="btn btn-primary" id="navProfileBtn" style="display:none;">My Profile</button>
+    </div>
+  </nav>
+</header>

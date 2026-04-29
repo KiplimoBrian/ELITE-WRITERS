@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Complete Payment - Elite Writers</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- ✅ Page-only premium theme override (does NOT affect other pages) -->
+  <style>
+  :root{
+    --bg: #f8fafc;
+    --panel: #ffffff;
+    --card: #ffffff;
+    --text: #0f172a;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --gold: #f59e0b;
+    --blue: #2563eb;
+  }
+
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  }
+
+  .payments-container{
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 40px 16px 70px;
+  }
+
+  .payments-header{
+    margin-bottom: 20px;
+  }
+
+  .payments-header h1{
+    margin: 0 0 10px;
+    font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .subtitle{
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .card{
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.04);
+    padding: 22px;
+    margin: 18px 0;
+  }
+
+  .card-title{
+    margin: 0 0 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+
+  .muted-note{
+    color: var(--muted) !important;
+  }
+
+  .pay-form{
+    display: grid;
+    gap: 14px;
+    margin-top: 10px;
+  }
+
+  .form-group label{
+    display:block;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .pay-form input[type="tel"]{
+    width: 100%;
+    border-radius: 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    background: #fff;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border .2s ease;
+  }
+
+  .pay-form input[type="tel"]:focus{
+    border-color: var(--blue);
+  }
+
+  .btn-primary{
+    background: var(--blue);
+    color: #fff;
+    font-weight: 700;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: background .2s ease, transform .1s ease;
+  }
+
+  .btn-primary:hover{
+    background: #1d4ed8;
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:disabled{
+    opacity: .6;
+    cursor: not-allowed;
+  }
+
+  .form-status{
+    margin: 0;
+    min-height: 20px;
+  }
+
+  .site-footer{
+    text-align:center;
+    color: var(--muted);
+    padding: 30px 16px;
+    font-size: 0.9rem;
+  }
+</style>
+</head>
+
+<body>
+  <!-- ✅ Navbar injected here -->
+  <div id="navbar"></div>
+
+  <script>
+    fetch("/navbar.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("navbar").innerHTML = html;
+
+        // Auth UI toggle
+        const s = document.createElement("script");
+        s.type = "module";
+        s.src = "/js/nav-auth-toggle.js?v=" + Date.now();
+        document.body.appendChild(s);
+
+        // ✅ Payment-confirmation page guard
+        const guard = document.createElement("script");
+        guard.type = "module";
+        guard.src = "/js/payment-page-guard.js?v=" + Date.now();
+        document.body.appendChild(guard);
+
+        // Theme toggle hookup (safe)
+        const themeToggle = document.getElementById("themeToggle");
+        const body = document.body;
+
+        if (themeToggle) {
+          if (localStorage.getItem("theme") === "dark") {
+            body.classList.add("dark");
+            themeToggle.textContent = "☀️";
+          } else {
+            themeToggle.textContent = "🌙";
+          }
+
+          themeToggle.addEventListener("click", () => {
+            body.classList.toggle("dark");
+            const isDark = body.classList.contains("dark");
+            themeToggle.textContent = isDark ? "☀️" : "🌙";
+            localStorage.setItem("theme", isDark ? "dark" : "light");
+          });
+        }
+      });
+  </script>
+
+  <main class="payments-container">
+    <header class="payments-header">
+      <h1>Complete Registration Payment</h1>
+      <p class="subtitle">
+        Pay the one-time registration fee of <strong style="color: var(--gold);">KES 500</strong> to activate your account.
+      </p>
+    </header>
+
+    <!-- STATUS -->
+    <section class="card card-status" aria-live="polite">
+      <p id="pageStatus" class="muted-note">Checking your account...</p>
+    </section>
+
+    <!-- ✅ STK PUSH ONLY -->
+    <section class="card card-option">
+      <div class="card-head">
+        <h2 class="card-title">Pay with M-Pesa STK Push</h2>
+      </div>
+
+      <form id="stkForm" class="pay-form" novalidate>
+        <div class="form-group">
+          <label for="stkPhone">M-Pesa Number</label>
+          <input
+            type="tel"
+            id="stkPhone"
+            placeholder="2547XXXXXXXX"
+            inputmode="numeric"
+            autocomplete="tel"
+            required
+          />
+          <small id="stkPhoneHelp" class="field-hint muted-note"></small>
+        </div>
+
+        <button type="submit" class="btn-primary" id="stkBtn">
+          Pay KES 500 Now (STK)
+        </button>
+
+        <p id="stkStatus" class="muted-note form-status" aria-live="polite"></p>
+      </form>
+
+      <p class="muted-note" style="margin-top:12px;">
+        You will receive an STK prompt on your phone. Enter your M-Pesa PIN to complete payment.
+      </p>
+    </section>
+
+    <section class="card card-info">
+      <p class="muted-note">
+        Once payment is confirmed, your account becomes active and you can access jobs.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 Elite Writers. All rights reserved.</p>
+  </footer>
+
+  <!-- ✅ Keep your backend logic exactly as-is -->
+  <script type="module" src="js/payment-confirmation.js"></script>
+  <script type="module" src="js/paid-guard.js"></script>
+</body>
+</html>

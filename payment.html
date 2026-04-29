@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Payments - Elite Writers</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- ✅ Navbar injected here -->
+  <div id="navbar"></div>
+
+  <script>
+    // Inject navbar + load nav auth toggle (NO cache-busting)
+    fetch("/navbar.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("navbar").innerHTML = html;
+
+        const s = document.createElement("script");
+        s.type = "module";
+        s.src = "/js/nav-auth-toggle.js";
+        document.body.appendChild(s);
+
+        // Theme toggle hookup (safe)
+        const toggleBtn = document.getElementById("themeToggle");
+        const body = document.body;
+
+        if (toggleBtn) {
+          if (localStorage.getItem("theme") === "dark") {
+            body.classList.add("dark");
+            toggleBtn.textContent = "☀️";
+          } else {
+            toggleBtn.textContent = "🌙";
+          }
+
+          toggleBtn.addEventListener("click", () => {
+            body.classList.toggle("dark");
+            const isDark = body.classList.contains("dark");
+            toggleBtn.textContent = isDark ? "☀️" : "🌙";
+            localStorage.setItem("theme", isDark ? "dark" : "light");
+          });
+        }
+      })
+      .catch(err => console.error("Navbar inject failed:", err));
+  </script>
+
+  <main class="payments-container">
+    <h1>Payments & M-Pesa Withdrawals</h1>
+    <p class="subtitle">View your earnings and withdraw funds directly to your M-Pesa account.</p>
+
+    <div class="earnings-cards">
+      <div class="card">
+        <h3>Available Balance</h3>
+        <p class="balance" id="availableBalance">KES 0.00</p>
+      </div>
+      <div class="card">
+        <h3>Total Earned</h3>
+        <p class="balance muted" id="totalEarned">KES 0.00</p>
+      </div>
+    </div>
+
+        <div class="withdrawal-card">
+      <h3>Request Withdrawal</h3>
+      <form id="withdrawalForm">
+        <div class="form-group">
+          <label for="phone">M-Pesa Phone Number</label>
+          <input type="tel" id="phone" placeholder="07XXXXXXXX" required />
+        </div>
+        <div class="form-group">
+          <label for="amount">Amount (KES)</label>
+          <input type="number" id="amount" min="500" placeholder="Minimum 500" required />
+        </div>
+        
+        <button type="submit" class="btn-withdraw" id="withdrawBtn">Withdraw via M-Pesa</button>
+      </form>
+    </div>
+
+    <div class="history-section">
+      <h3>Withdrawal History</h3>
+      <div class="history-card">
+        <ul class="history-list" id="historyList"></ul>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Elite Writers. All rights reserved.</p>
+  </footer>
+
+  <!-- ✅ Backend + UI logic (single source of truth) -->
+  <script type="module">
+    import { auth, db } from "/js/firebase-init.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+    import {
+      doc, getDoc,
+      collection, addDoc, serverTimestamp,
+      query, where, orderBy, limit, getDocs
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+    const form = document.getElementById("withdrawalForm");
+    const withdrawBtn = document.getElementById("withdrawBtn");
+    const mpesaMessageEl = document.getElementById("mpesaMessage");
+    const historyList = document.getElementById("historyList");
+
+    const availableBalanceEl = document.getElementById("availableBalance");
+    const totalEarnedEl = document.getElementById("totalEarned");
+
+    let currentUser = null;
+
+    function setBtnDisabledFromMessage() {
+      if (!withdrawBtn || !mpesaMessageEl) return;
+      withdrawBtn.disabled = mpesaMessageEl.value.trim().length < 20;
+    }
+
+    function fmtKES(n) {
+      const num = Number(n || 0);
+      return "KES " + num.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    async function loadWithdrawalHistory(uid) {
+      if (!historyList) return;
+
+      historyList.innerHTML = `<li class="muted-note">Loading history...</li>`;
+
+      try {
+        const q = query(
+          collection(db, "withdrawals"),
+          where("userId", "==", uid),
+          orderBy("createdAt", "desc"),
+          limit(25)
+        );
+
+        const snap = await getDocs(q);
+
+        if (snap.empty) {
+          historyList.innerHTML = `<li class="muted-note">No withdrawals yet.</li>`;
+          return;
+        }
+
+        const items = [];
+        snap.forEach((d) => {
+          const w = d.data() || {};
+          const amount = fmtKES(w.amount || 0);
+          const status = (w.status || "pending");
+          items.push(`<li>${amount} — <strong>${status}</strong></li>`);
+        });
+
+        historyList.innerHTML = items.join("");
+      } catch (err) {
+        console.error("History load error:", err);
+        // most likely: permission-denied due to rules
+        if (err?.code === "permission-denied") {
+          historyList.innerHTML = `<li class="muted-note">History hidden by Firestore rules (permission-denied).</li>`;
+        } else {
+          historyList.innerHTML = `<li class="muted-note">Failed to load history.</li>`;
+        }
+      }
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "/login.html";
+        return;
+      }
+
+      currentUser = user;
+
+      // ✅ Do NOT enforce role (you said you don't use roles yet)
+      // ✅ Do NOT block if users/{uid} doc is missing
+      try {
+        const userSnap = await getDoc(doc(db, "users", user.uid));
+        if (userSnap.exists()) {
+          const userData = userSnap.data() || {};
+
+          // Optional status gate ONLY if you really use it
+          if (userData.status && String(userData.status).toLowerCase() !== "active") {
+            alert("Your account is not active.");
+            window.location.href = "/index.html";
+            return;
+          }
+        }
+      } catch (err) {
+        console.error("User profile read blocked:", err);
+        // If rules block users read, don't crash the page—still allow withdrawals form.
+      }
+
+      // Button state + history load
+      if (mpesaMessageEl) {
+        mpesaMessageEl.addEventListener("input", setBtnDisabledFromMessage);
+        setBtnDisabledFromMessage();
+      }
+
+      // Optional placeholders (until you implement balances)
+      if (availableBalanceEl) availableBalanceEl.textContent = fmtKES(0);
+      if (totalEarnedEl) totalEarnedEl.textContent = fmtKES(0);
+
+      await loadWithdrawalHistory(user.uid);
+
+      // Bind submit once
+      if (form && form.dataset.bound !== "1") {
+        form.dataset.bound = "1";
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          if (!currentUser) return;
+
+          const phone = document.getElementById("phone").value.trim();
+          const amount = Number(document.getElementById("amount").value);
+          const mpesaMessage = document.getElementById("mpesaMessage").value.trim();
+
+          if (amount < 500) {
+            alert("Minimum withdrawal is KES 500.");
+            return;
+          }
+          if (mpesaMessage.length < 20) {
+            alert("Please paste the full M-Pesa confirmation message.");
+            return;
+          }
+
+          try {
+            await addDoc(collection(db, "withdrawals"), {
+              userId: currentUser.uid,
+              phone,
+              amount,
+              mpesaMessage,
+              feeRequired: 200,
+              status: "pending",
+              createdAt: serverTimestamp()
+            });
+
+            alert("Withdrawal request submitted. Await admin verification.");
+            form.reset();
+            setBtnDisabledFromMessage();
+            await loadWithdrawalHistory(currentUser.uid);
+
+          } catch (err) {
+            console.error("Withdrawal submit error:", err);
+
+            if (err?.code === "permission-denied") {
+              alert("Blocked by Firestore rules (permission-denied). Allow create on withdrawals for signed-in users.");
+              return;
+            }
+
+            alert("Error: " + (err?.message || "Failed to submit withdrawal."));
+          }
+        });
+      }
+    });
+  </script>
+  <script type="module" src="js/paid-guard.js"></script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Terms of Service - Elite Writers</title>
+  <meta name="description" content="Terms of Service for Elite Writers – Kenya's premier freelance writing platform." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- ✅ Navbar injected here -->
+  <div id="navbar"></div>
+
+  <!-- ✅ Inject navbar.html then load nav-auth-toggle AFTER it exists.
+      ALSO: attach theme toggle AFTER navbar injection (themeToggle exists inside navbar.html). -->
+  <script>
+    fetch("/navbar.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("navbar").innerHTML = html;
+
+        // Load auth toggle AFTER navbar exists
+        const s = document.createElement("script");
+        s.type = "module";
+        s.src = "/js/nav-auth-toggle.js?v=" + Date.now(); // cache-bust
+        document.body.appendChild(s);
+
+        // Theme toggle hookup (safe even if button not present)
+        const toggleBtn = document.getElementById("themeToggle");
+        const body = document.body;
+
+        if (toggleBtn) {
+          if (localStorage.getItem("theme") === "dark") {
+            body.classList.add("dark");
+            toggleBtn.textContent = "☀️";
+          } else {
+            toggleBtn.textContent = "🌙";
+          }
+
+          toggleBtn.addEventListener("click", () => {
+            body.classList.toggle("dark");
+            const isDark = body.classList.contains("dark");
+            toggleBtn.textContent = isDark ? "☀️" : "🌙";
+            localStorage.setItem("theme", isDark ? "dark" : "light");
+          });
+        }
+      });
+  </script>
+
+  <!-- ✅ Main Content (removed duplicate hard-coded header/navbar) -->
+  <main style="max-width: 900px; margin: 80px auto; padding: 0 20px; line-height: 1.8;" data-aos="fade-up">
+    <h1 style="font-size: 3rem; text-align: center; margin-bottom: 16px;">Terms of Service</h1>
+    <p style="text-align: center; color: var(--gray); margin-bottom: 60px;">Last Updated: December 26, 2025</p>
+
+    <section style="margin-bottom: 48px;">
+      <p>
+        Welcome to <strong>Elite Writers</strong> ("the Platform"), Kenya's premier freelance writing platform connecting professional writers with opportunities in academic, business, SEO, technical, and other writing fields.
+      </p>
+      <p>
+        By accessing or using the Platform, registering an account, or submitting payments (including the one-time registration fee), you agree to be bound by these Terms of Service ("Terms"). If you do not agree, do not use the Platform.
+      </p>
+      <p>
+        Elite Writers is operated as a marketplace facilitating connections between writers ("Writers" or "you") and internal job opportunities. We are not a direct employer but an intermediary platform.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 48px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">1. Eligibility</h2>
+      <ul style="padding-left: 24px; margin-bottom: 16px;">
+        <li>You must be at least 18 years old to use the Platform.</li>
+        <li>You must be a resident of Kenya or eligible to receive payments via M-Pesa.</li>
+        <li>You represent that all information provided during registration is accurate and complete.</li>
+      </ul>
+    </section>
+
+    <section style="margin-bottom: 48px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">2. Account Registration and Security</h2>
+      <ul style="padding-left: 24px; margin-bottom: 16px;">
+        <li>To access writing jobs, you must register and pay a <strong>one-time registration fee of KSH 500</strong> via M-Pesa STK Push upon submission of your registration form.</li>
+        <li>This fee covers account activation, profile setup, and access to the writer portal. It is non-refundable once paid.</li>
+        <li>You are responsible for maintaining the confidentiality of your account credentials.</li>
+        <li>Notify us immediately of any unauthorized use of your account.</li>
+      </ul>
+    </section>
+
+    <section style="margin-bottom: 48px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">3. Writer Obligations</h2>
+      <ul style="padding-left: 24px; margin-bottom: 16px;">
+        <li>All work submitted must be <strong>original, plagiarism-free, and created solely by you</strong>.</li>
+        <li>You warrant that your submissions do not infringe any third-party intellectual property rights, including copyrights, trademarks, or privacy rights.</li>
+        <li>Plagiarism or use of AI-generated content without disclosure is strictly prohibited and may result in immediate account termination, forfeiture of earnings, and potential legal action.</li>
+        <li>You must meet deadlines and follow job instructions provided.</li>
+        <li>You agree to revisions as reasonably requested for assigned jobs.</li>
+      </ul>
+    </section>
+
+    <section style="margin-bottom: 48px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">4. Payments and Withdrawals</h2>
+      <ul style="padding-left: 24px; margin-bottom: 16px;">
+        <li>Earnings from completed jobs are credited to your Platform account.</li>
+        <li>Withdrawals are processed via M-Pesa within 24 hours of request, subject to any minimum thresholds or verification.</li>
+        <li>All payments (including the registration fee and withdrawals) are processed through Safaricom M-Pesa and subject to Safaricom's terms and any applicable fees.</li>
+        <li>Elite Writers is not liable for delays or issues caused by M-Pesa services.</li>
+        <li><strong>Taxes:</strong> You are solely responsible for reporting and paying any taxes on your earnings as required by Kenyan law.</li>
+      </ul>
+    </section>
+
+    <section style="margin-bottom: 48px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">5. Platform Rules</h2>
+      <ul style="padding-left: 24px; margin-bottom: 16px;">
+        <li>No direct contact with clients outside the Platform.</li>
+        <li>No sharing of personal contact information that bypasses the Platform.</li>
+        <li>Prohibited activities include: spam, harassment, fraudulent submissions, or any illegal activity.</li>
+        <li>We reserve the right to suspend or terminate accounts for violations of these Terms.</li>
+      </ul>
+    </section>
+
+    <section style="margin-bottom: 48px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">6. Intellectual Property</h2>
+      <p>Upon completion and payment for a job, all rights to the work transfer to Elite Writers or the end client.</p>
+      <p>You grant Elite Writers a perpetual license to use your profile and samples for promotional purposes.</p>
+    </section>
+
+    <section style="margin-bottom: 48px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">7. Data Protection and Privacy</h2>
+      <ul style="padding-left: 24px; margin-bottom: 16px;">
+        <li>We comply with the <strong>Kenya Data Protection Act, 2019</strong>.</li>
+        <li>Your personal data (name, email, phone, etc.) is collected for account management, payments, and communication.</li>
+        <li>We do not sell your data to third parties.</li>
+        <li>Data may be shared with payment processors (e.g., Safaricom for M-Pesa) as necessary.</li>
+        <li>You have rights to access, correct, or delete your data—contact us at <a href="mailto:support@elitewriters.co.ke">support@elitewriters.co.ke</a>.</li>
+      </ul>
+      <p>For more details, see our <a href="privacy-policy.html" style="color: var(--primary);">Privacy Policy</a>.</p>
+    </section>
+
+    <section style="margin-bottom: 48px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">8. Disclaimers and Limitation of Liability</h2>
+      <ul style="padding-left: 24px; margin-bottom: 16px;">
+        <li>The Platform is provided "as is" without warranties of any kind.</li>
+        <li>Elite Writers is not liable for any indirect, incidental, or consequential damages arising from use of the Platform.</li>
+        <li>Our total liability shall not exceed the amount of fees paid by you in the last 12 months.</li>
+        <li>We are not responsible for job availability or client actions.</li>
+      </ul>
+    </section>
+
+    <section style="margin-bottom: 48px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">9. Termination</h2>
+      <ul style="padding-left: 24px; margin-bottom: 16px;">
+        <li>You may terminate your account at any time.</li>
+        <li>We may terminate or suspend your account for breach of these Terms, with or without notice.</li>
+        <li>Upon termination, unpaid earnings may be forfeited if due to violations.</li>
+      </ul>
+    </section>
+
+    <section style="margin-bottom: 48px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">10. Governing Law</h2>
+      <p>These Terms are governed by the laws of the Republic of Kenya. Any disputes shall be resolved in the courts of Kenya.</p>
+    </section>
+
+    <section style="margin-bottom: 60px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">11. Changes to Terms</h2>
+      <p>We may update these Terms from time to time. Continued use of the Platform constitutes acceptance of changes. Significant changes will be notified via email or Platform announcement.</p>
+    </section>
+
+    <section style="text-align: center; padding: 40px 20px; background: var(--light-gray); border-radius: 12px;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 16px;">Contact Us</h2>
+      <p>If you have questions about these Terms, contact us at:</p>
+      <p><a href="mailto:support@elitewriters.co.ke" style="color: var(--primary); font-weight: 600;">support@elitewriters.co.ke</a></p>
+      <p style="margin-top: 32px;">Thank you for choosing Elite Writers—let's build a successful freelance career together!</p>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 40px 20px; color: var(--gray); border-top: 1px solid var(--border);">
+    <p>&copy; 2025 Elite Writers. All rights reserved. | Made with ❤️ in Kenya</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="scripts.js"></script>
+  <script>
+    AOS.init({
+      duration: 900,
+      easing: 'ease-in-out',
+      once: true,
+      offset: 100
+    });
+  </script>
+  <script type="module" src="js/paid-guard.js"></script>
+</body>
+</html>

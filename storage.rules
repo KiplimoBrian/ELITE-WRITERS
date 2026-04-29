@@ -1,0 +1,37 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return request.auth != null
+        && (
+          request.auth.token.email == "kiplagatcollins18@gmail.com" ||
+          request.auth.token.email == "kuruikiplimo254@gmail.com"
+        );
+    }
+
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    // Admin uploads original job attachments
+    match /jobs/{jobId}/attachments/{allPaths=**} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // Writers upload submitted work for their own jobs
+    match /submissions/{writerId}/{jobId}/{allPaths=**} {
+      allow read: if isSignedIn();
+      allow write: if isOwner(writerId) || isAdmin();
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
